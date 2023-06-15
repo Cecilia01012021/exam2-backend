@@ -2,6 +2,8 @@ package ec.edu.insteclrg.dto;
 
 import java.io.Serializable;
 
+
+
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;

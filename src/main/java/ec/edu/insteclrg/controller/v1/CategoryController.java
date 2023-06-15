@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,22 +27,23 @@ public class CategoryController {
 	@Autowired
 	CategoryService service;
 
-	@PostMapping
+	@PostMapping(path = "/guardar")
 	public ResponseEntity<Object> guardar(@RequestBody CategoriaDTO dto) {
-		service.save(dto);
+		service.guardar(dto);
 		return new ResponseEntity<>(new ApiResponseDTO<>(true, null), HttpStatus.CREATED);
 	}
 
-	@PutMapping
-	public ResponseEntity<Object> actualizar(@RequestBody CategoriaDTO dto) {
-		// TODO
-		// Completar
-		return null;
+	
+	@PutMapping(path = "/actualizar")
+	public ResponseEntity <Object> actualizar(@RequestBody   CategoriaDTO dto) {
+		service.actualizar(dto);
+		return new ResponseEntity<>(new ApiResponseDTO<>(true, null), HttpStatus.CREATED);
+		
 	}
 
-	@GetMapping
+	@GetMapping(path = "/listar")
 	public ResponseEntity<Object> listar() {
-		List<CategoriaDTO> list = service.findAll(new CategoriaDTO());
+		List<CategoriaDTO> list = service.buscarTodo(new CategoriaDTO());
 		if (!list.isEmpty()) {
 			ApiResponseDTO<List<CategoriaDTO>> response = new ApiResponseDTO<>(true, list);
 			return (new ResponseEntity<Object>(response, HttpStatus.OK));
@@ -50,20 +52,24 @@ public class CategoryController {
 		}
 	}
 
-	@GetMapping(path = "{id}")
+	@GetMapping(path = "{id}/buscar")
 	public ResponseEntity<Object> buscar(@PathVariable Long id) {
 		CategoriaDTO dto = new CategoriaDTO();
 		dto.setId(id);
-		Optional<Category> domain = service.find(dto);
+		Optional<Category> domain = service.buscar(dto);
 		if (!domain.isEmpty()) {
-			dto = service.mapToDto(domain.get());
+			dto = service.mapearDTO(domain.get());
 			return new ResponseEntity<>(new ApiResponseDTO<>(true, dto), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(new ApiResponseDTO<>(false, null), HttpStatus.NOT_FOUND);
 		}
 	}
-
-	// TODO
-	// eliminar por id
-
+	@DeleteMapping(path = "/{id}/eliminar")
+	public ResponseEntity<Object> eliminar(@PathVariable Long id) {
+		CategoriaDTO dto = new CategoriaDTO();
+		dto.setId(id);
+		service.eliminar(dto);
+		return new ResponseEntity<>(new ApiResponseDTO<>(true, null), HttpStatus.CREATED);
+	
+}
 }

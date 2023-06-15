@@ -1,6 +1,19 @@
 package ec.edu.insteclrg.dto;
 
-public class ServicioDTO {
-	// TODO
-		// Completar
+import java.io.Serializable;
+
+
+import lombok.Data;
+
+@Data
+
+public class ServicioDTO   {
+
+	
+	
+	private long id;
+
+	private String nombre;
+
+	
 }

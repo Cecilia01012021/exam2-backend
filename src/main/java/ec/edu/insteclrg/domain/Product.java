@@ -14,6 +14,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Product {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
@@ -21,6 +22,9 @@ public class Product {
 
 	@Column(unique = true, nullable = false)
 	private String name;
+	
+	@Column(unique = true, nullable = false)
+	private String descripcion;
 
 	@ManyToOne(cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "category_id")

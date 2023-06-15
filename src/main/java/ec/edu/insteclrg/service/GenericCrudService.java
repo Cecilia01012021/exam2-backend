@@ -3,20 +3,27 @@ package ec.edu.insteclrg.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import ec.edu.insteclrg.dto.ServicioDTO;
+
 public interface GenericCrudService<DOMAIN, DTO> {
 
-	public void save(DTO dto);
+	void guardar(DTO dtoObject);
 
-	public void update(DTO dto);
+	void actualizar(DTO dtoObject);
+	
+	void eliminar(DTO dtoObject);
 
-	public void delete(DTO dto);
+	List<DTO> buscarTodo(DTO dtoObject);
 
-	public abstract Optional<DOMAIN> find(DTO dto);
+	DOMAIN mapearDominio(DTO dtoObject);
 
-	public List<DTO> findAll(DTO dto);
+	DTO mapearDTO(DOMAIN domainObject);
 
-	DOMAIN mapToDomain(DTO dto);
+	abstract Optional<DOMAIN> buscar(DTO dtoObject);
 
-	DTO mapToDto(DOMAIN domain);
+	
 
+	
 }
